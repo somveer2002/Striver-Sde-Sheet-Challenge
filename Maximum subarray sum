@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+long long maxSubarraySum(int arr[], int n)
+{
+    long long res=0,psum=arr[0];
+    for(int i=1;i<n;i++){
+        if(psum+arr[i] > arr[i])
+            psum+=arr[i];
+        else
+            psum=arr[i];
+        if(res<psum)
+            res=psum;
+//         psum=max(psum+arr[i],arr[i]);
+//         res=max(res,psum);
+    }
+    return res;
+    /*
+        Don't write main().
+        Don't read input, it is passed as function argument.    
+        No need to print anything.
+        Taking input and printing output is handled automatically.
+    */
+}
