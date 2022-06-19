@@ -1,0 +1,19 @@
+#include <bits/stdc++.h> 
+void sort012(int *arr, int n)
+{
+    int first=0,second=0,last=n-1;
+    while(second<=last){
+        if(arr[second]==0){
+            swap(arr[first],arr[second]);
+            first++;
+            second++;
+        }
+        else if(arr[second]==2){
+            swap(arr[second],arr[last]);
+            last--;
+        }
+        else
+            second++;
+    }
+   //   Write your code here
+}
