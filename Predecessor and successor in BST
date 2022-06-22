@@ -1,0 +1,86 @@
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~BinaryTreeNode() {
+            if (left)
+            {
+                delete left;
+            }
+            if (right)
+            {
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+#include<bits/stdc++.h>
+BinaryTreeNode<int>* getMax(BinaryTreeNode<int>*);
+BinaryTreeNode<int>* getMin(BinaryTreeNode<int>*);
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    pair<int,int> res;
+    BinaryTreeNode<int> *t_pre=NULL,*t_suc=NULL,*pre,*suc,*node=root;
+    while(1){
+        if(node->data==key)
+            break;
+        else if(node->data<key){
+            t_pre=node;
+            node=node->right;
+        }
+        else{
+            t_suc=node;
+            node=node->left;
+        }
+            
+    }
+    
+    pre=getMax(node->left);
+    suc=getMin(node->right);
+    if(pre)
+        res.first=pre->data;
+    else{
+        if(t_pre)
+            res.first=t_pre->data;
+        else
+            res.first=-1;
+    }
+    if(suc)
+        res.second=suc->data;
+    else{
+        if(t_suc)
+            res.second=t_suc->data;
+        else
+            res.second=-1;
+    }
+    return res;   
+    // Write your code here.
+}
+BinaryTreeNode<int>* getMax(BinaryTreeNode<int>* node){
+    if(!node) return NULL;
+    while(node->right!=NULL)
+        node=node->right;
+    return node;
+}
+BinaryTreeNode<int>* getMin(BinaryTreeNode<int>* node){
+    if(!node) return NULL;
+    while(node->left!=NULL)
+        node=node->left;
+    return node;
+}
