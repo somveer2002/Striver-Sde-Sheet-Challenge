@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+class Queue {
+    // Define the data members(if any) here.
+    stack<int> q,aux_q;
+    public:
+    Queue() {
+        // Initialize your data structure here.
+    }
+
+    void enQueue(int val) {
+        while(!q.empty()){
+            aux_q.push(q.top());
+            q.pop();
+        }
+        q.push(val);
+        while(!aux_q.empty()){
+            q.push(aux_q.top());
+            aux_q.pop();
+        }
+        // Implement the enqueue() function.
+    }
+
+    int deQueue() {
+        if(q.empty())
+            return -1;
+        int res=q.top();
+        q.pop();
+        return res;
+        // Implement the dequeue() function.
+    }
+
+    int peek() {
+        if(q.empty())
+            return -1;
+        return q.top();
+        // Implement the peek() function here.
+    }
+
+    bool isEmpty() {
+        return q.empty();
+        // Implement the isEmpty() function here.
+    }
+};
