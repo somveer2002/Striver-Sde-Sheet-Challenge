@@ -1,0 +1,39 @@
+class Queue {
+    vector<int> q;
+    int cap;
+public:
+    Queue() {
+        cap=0;
+        // Implement the Constructor
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        return cap==0;
+        // Implement the isEmpty() function
+    }
+
+    void enqueue(int data) {
+        q.push_back(data);
+        cap++;
+        // Implement the enqueue() function
+    }
+
+    int dequeue() {
+        if(cap==0)
+            return -1;
+        int res=q[0];
+        q.erase(q.begin());
+        cap--;
+        return res;
+        // Implement the dequeue() function
+    }
+
+    int front() {
+        if(cap==0)
+            return -1;
+        return q[0];
+        // Implement the front() function
+    }
+};
