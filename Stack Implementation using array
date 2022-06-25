@@ -1,0 +1,48 @@
+// Stack class.
+class Stack {
+    int *st;
+    int size=0,cap;
+public:
+    
+    Stack(int capacity) {
+        st=new int[capacity];
+        cap=capacity;
+        // Write your code here.
+    }
+
+    void push(int num) {
+        if(size<cap){
+            st[size]=num;
+            size++;
+        }
+        // Write your code here.
+    }
+
+    int pop() {
+        if(size>0){
+            int res=st[size-1];
+            size--;
+            return res;
+        }
+        return -1;
+        // Write your code here.
+    }
+    
+    int top() {
+        if(size>0)
+            return st[size-1];
+        return -1;
+        // Write your code here.
+    }
+    
+    int isEmpty() {
+        return (size==0);
+        // Write your code here.
+    }
+    
+    int isFull() {
+        return (size==cap);
+        // Write your code here.
+    }
+    
+};
