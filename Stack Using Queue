@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+class Stack {
+	queue<int> st,aux_st;
+    // Define the data members.
+
+   public:
+    Stack() {
+        
+        // Implement the Constructor.
+    }
+
+    /*----------------- Public Functions of Stack -----------------*/
+
+    int getSize() {
+        return st.size();
+        // Implement the getSize() function.
+    }
+
+    bool isEmpty() {
+        return (st.size()==0);
+        // Implement the isEmpty() function.
+    }
+
+    void push(int element) {
+        while(!st.empty()){
+            aux_st.push(st.front());
+            st.pop();
+        }
+        st.push(element);
+        while(!aux_st.empty()){
+            st.push(aux_st.front());
+            aux_st.pop();
+        }
+        // Implement the push() function.
+    }
+
+    int pop() {
+        if(st.empty())
+            return -1;
+        int res=st.front();
+        st.pop();
+        return res;
+        // Implement the pop() function.
+    }
+
+    int top() {
+        if(st.empty())
+            return -1;
+        return st.front();
+        // Implement the top() function.
+    }
+};
