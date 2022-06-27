@@ -1,0 +1,85 @@
+#include <bits/stdc++.h> 
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+	        int data;
+	        Node *next;
+	        Node(int data)
+	        {
+		        this->data = data;
+		        this->next = NULL;
+	        }
+        };
+
+*****************************************************************/
+#include<bits/stdc++.h>
+Node* reverseInK(Node* &,int);
+Node* reverse(Node* &);
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+	// Write your code here.
+    if(n==1 && b[0]==0)
+        return head;
+        
+    if(head==NULL)
+        return head;
+    Node * prev=NULL,*res=NULL,*temp=head;
+    int i=0;
+    while(i<n&& temp!=NULL){
+        if(b[i]!=0){
+            Node* p=temp;
+//         if(b[i]==0)
+//             continue;
+            Node* t=reverseInK(temp,b[i]);
+            if(res==NULL)
+                res=t;
+            else
+                prev->next=t;
+            prev=p;
+            
+        }
+        i++;
+            
+        
+        
+    }
+    if(prev)
+        prev->next=temp;
+    return res;
+    
+    
+}
+Node* reverseInK(Node* &root,int k){
+   
+    Node* t1=root,*t2=root;
+    root=t2->next;
+    while(k>1 && root!=NULL){
+        t2=t2->next;
+        root=t2->next;
+        k--;
+    }
+    if(t2!=NULL)
+        t2->next=NULL;
+    Node* res=reverse(t1);
+    return res;
+}
+Node* reverse(Node* &head){
+    if(head==NULL)
+        return NULL;
+    Node *t1=NULL,*t2=head,*t3;
+    if(head->next==NULL)
+        return head;
+    t3=t2->next;
+//     t3=t2->next;
+    while(t2!=NULL){
+        t2->next=t1;
+        t1=t2;
+        t2=t3;
+        if(t3!=NULL)
+            t3=t3->next;
+    }
+    return t1;
+}
