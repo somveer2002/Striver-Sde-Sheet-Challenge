@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+vector<int> prevMin(vector<int> &v){
+    vector<int> res;
+    stack<int> st;
+    for(int i=0;i<v.size();i++){
+        while(!st.empty() && v[st.top()]>=v[i])
+            st.pop();
+        if(st.empty())
+            res.push_back(-1);
+        else
+            res.push_back(st.top());
+        st.push(i);
+        
+    }
+    return res;
+}
+
+vector<int> nextMin(vector<int> &v){
+    vector<int> res(v.size(),v.size());
+    stack<int> st;
+    st.push(0);
+    for(int i=1;i<v.size();i++){
+        while(!st.empty() && v[i]<v[st.top()]){
+            res[st.top()]=i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    return res;
+    
+}
+
+int largestRectangle(vector < int > & heights) {
+   // Write your code here.
+    vector<int> leftMin,rightMin;
+    leftMin=prevMin(heights);
+    rightMin=nextMin(heights);
+    int res=0;
+    for(int i=0;i<heights.size();i++){
+        int height=heights[i];
+        int width=rightMin[i]-leftMin[i]-1;
+        int area=width*height;
+        res=max(res,area);
+            
+    }
+    return res;
+    
+ }
