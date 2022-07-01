@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+
+
+
+int parent(int i){ 
+    return ((i-1)/2); 
+}
+int left(int i){ return i*2+1 ;}
+int right(int i){ return i*2+2 ;}
+void insert(vector<int> &mH,int x){
+    int i=mH.size();
+    mH.push_back(x);
+    while(i>0 && parent(i)>=0 && mH[parent(i)]>mH[i]){
+        swap(mH[i],mH[parent(i)]);
+        i=parent(i);
+    }
+    
+}
+
+void minHeapify(vector<int> &mH,int i){
+    int l=left(i),r=right(i);
+    while(r<mH.size() && (mH[i]>mH[l] || mH[i]>mH[r])){
+        if(mH[l]<mH[r]){
+            swap(mH[i],mH[l]);
+            i=l;
+        }
+        else{
+            swap(mH[i],mH[r]);
+            i=r;
+        }
+        l=left(i);
+        r=right(i);
+    }
+    if(r==mH.size() && mH[l]<mH[i])
+        swap(mH[i],mH[l]);
+}
+
+int extractMin(vector<int> &mH){
+    int res=-1;
+    if(mH.size()==0)
+        return res;
+    res=mH[0];
+    if(mH.size()==1){      
+        mH.pop_back();
+        return res;
+    }
+    swap(mH[0],mH[mH.size()-1]);
+    mH.pop_back();
+    minHeapify(mH,0);
+   return res;
+    
+    
+    
+}
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    // Write your code here.
+    vector<int> res,mH;
+    for(int i=0;i<n;i++){
+        if(q[i][0]==0)
+            insert(mH,q[i][1]);
+        else{
+            int val=extractMin(mH);
+            res.push_back(val);
+        }
+    }
+    return res;
+    
+}
