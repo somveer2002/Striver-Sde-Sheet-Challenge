@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+class myObj{
+    public:
+    int elm,pos_arr,pos_elm;
+    myObj(int e,int pa,int pe){
+        elm=e;
+        pos_arr=pa;
+        pos_elm=pe;
+    }
+};
+struct myComp{
+    bool operator()(myObj &obj1,myObj &obj2){
+        return obj1.elm>obj2.elm;
+    }
+};
+vector<int> mergeKSortedArrays(vector<vector<int>>&arr, int k)
+{
+    vector<int> res;
+    priority_queue<myObj,vector<myObj>,myComp> pq;
+    for(int i=0;i<k;i++){
+        myObj obj(arr[i][0],i,0);
+        pq.push(obj);
+    }
+    while(!pq.empty()){
+        myObj temp=pq.top();
+        pq.pop();
+        int elm=temp.elm,p_a=temp.pos_arr,p_e=temp.pos_elm;
+        res.push_back(elm);
+        if(p_e+1<arr[p_a].size()){
+            myObj obj(arr[p_a][p_e+1],p_a,p_e+1);
+            pq.push(obj);
+        }
+    }
+    return res;
+    // Write your code here. 
+}
