@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+vector<vector<int>> pairSum(vector<int> arr,int l,int r,int x){
+    vector<vector<int>> res;
+    while(l<r){
+        if(arr[l]+arr[r]==x){
+            vector<int> t;
+            t.push_back(arr[l]);
+            t.push_back(arr[r]);
+            res.push_back(t);
+            l++;
+//             r--;
+            while(l<r && arr[l]==arr[l-1])
+                l++;
+            r--;
+            while(l<r && arr[r]==arr[r+1])
+                r--;
+            
+        }
+        else if(arr[l]+arr[r]<x)
+            l++;
+        else
+            r--;
+    }
+    return res;
+}
+vector<vector<int>> findTriplets(vector<int> arr, int n, int K) {
+	// Write your code here.
+    sort(arr.begin(),arr.end());
+    vector<vector<int>> res;
+    for(int i=0;i<n-2;i++){
+        vector<vector<int>> t=pairSum(arr,i+1,n-1,K-arr[i]);
+        for(int j=0;j<t.size();j++){
+            vector<int> temp;
+            temp.push_back(arr[i]);
+            temp.insert(temp.end(),t[j].begin(),t[j].end());
+            res.push_back(temp);
+        }
+        while(i<n-1 && arr[i]==arr[i+1])
+            i++;
+    }
+    return res;
+}
