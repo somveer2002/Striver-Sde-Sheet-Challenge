@@ -1,0 +1,45 @@
+/************************************************************
+
+    Following is the TreeNode class structure.
+
+    template <typename T>
+    class TreeNode {
+        public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+TreeNode<int> *flattenBinaryTree(TreeNode<int> *root)
+{
+    TreeNode<int> *curr=root;
+    while(curr!=NULL){
+        if(curr->left==NULL)
+               curr=curr->right;
+        else{
+            TreeNode<int> *prev=curr->left;
+            while(prev->right!=NULL && prev->right!=curr)
+                prev=prev->right;
+            if(prev->right==NULL){
+                prev->right=curr;
+                curr=curr->left;
+            }
+            else{
+                prev->right=curr->right;
+                curr->right=curr->left;
+                curr->left=NULL;
+                curr=prev->right;
+            }
+        }
+    }
+    return root;
+    // Write your code here.
+}
