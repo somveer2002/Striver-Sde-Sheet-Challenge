@@ -1,0 +1,60 @@
+/*   
+    template <typename T = int>
+	class TreeNode
+	{
+		public:
+		T data;
+		TreeNode<T> *left;
+		TreeNode<T> *right;
+
+		TreeNode(T data)
+		{
+			this->data = data;
+			left = NULL;
+			right = NULL;
+		}
+
+		~TreeNode()
+		{
+			if (left != NULL)
+			{
+		  		delete left;
+			}
+			if (right != NULL)
+			{
+			 	delete right;
+			}
+		}
+	};
+*/
+
+bool findPath(TreeNode<int>* root,int x,vector<int> &res){
+    if(root==NULL)
+        return false;
+    if(root->data==x){
+        res.push_back(root->data);
+        return true;
+    }
+    bool left=findPath(root->left,x,res);
+    if(left){
+        res.push_back(root->data);
+        return true;
+    }
+    bool right=findPath(root->right,x,res);
+    if(right){
+        res.push_back(root->data);
+        return true;
+    }
+    return false;
+}
+vector<int> pathInATree(TreeNode<int> *root, int x)
+{
+    vector<int> res;
+    findPath(root,x,res);
+    if(res.empty())
+        res.push_back(-1);
+    reverse(res.begin(),res.end());
+    return res;
+    // Write your code here.
+}
+
