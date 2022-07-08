@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+string reverseString(string str)
+{
+    string res="";
+    stack<char> s;
+    for(int i=str.length()-1;i>=0;i--){
+        if(str[i]==32 && s.empty()==false){
+            while(!s.empty()){
+                res+=s.top();
+                s.pop();
+            }
+            res+=" ";
+        }
+        else if(str[i]!=32){
+            s.push(str[i]);
+        }
+    }
+    while(!s.empty()){
+        res+=s.top();
+        s.pop();
+    }
+    return res;
+    // Write your code here.
+}
