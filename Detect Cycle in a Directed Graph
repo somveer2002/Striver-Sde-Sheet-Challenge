@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+
+bool checkCycle(int node,vector<int> &vis,vector<int> &dfsVis,       vector<int> adj[]){
+    vis[node]=1;
+    dfsVis[node]=1;
+    for(auto x:adj[node]){
+        if(vis[x]==0){
+            if(checkCycle(x,vis,dfsVis,adj))
+                return true;
+        }
+        else if(dfsVis[x]==1)
+            return true;
+    }
+    dfsVis[node]=0;
+    return false;
+}
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+    vector<int> adj[n+1];
+    for(int i=0;i<edges.size();i++){
+        adj[edges[i].first].push_back(edges[i].second);
+    }
+    vector<int> vis(n+1,0),dfsVis(n+1,0);
+    for(int i=1;i<=n;i++){
+        if(vis[i]!=1){
+            if(checkCycle(i,vis,dfsVis,adj))
+                return true;
+        }
+    }
+    return false;
+  // Write your code here.
+}
