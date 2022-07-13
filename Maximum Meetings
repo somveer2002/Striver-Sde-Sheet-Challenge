@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+class meeting{
+    public:
+    int s,e,no;
+    meeting(int st,int end,int mno){
+        s=st;
+        e=end;
+        no=mno;
+    }
+};
+struct myComp{
+    bool operator()(meeting &m1,meeting &m2){
+        if(m1.e==m2.e)
+            return m1.no<m2.no;
+        return m1.e<m2.e;
+    }
+};
+bool doesOverlap(meeting m1,meeting m2){
+    if(m2.s>m1.e)
+        return false;
+    else
+        return true;
+    
+}
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    vector<meeting> v;
+    int n=start.size();
+    for(int i=0;i<n;i++){
+        meeting m(start[i],end[i],i+1);
+        v.push_back(m);
+    }
+    sort(v.begin(),v.end(),myComp());
+    meeting prev=v[0];
+    vector<int> res(1,v[0].no);
+    for(int i=1;i<n;i++){
+        if(!doesOverlap(prev,v[i])){
+            res.push_back(v[i].no);
+            prev=v[i];
+        }
+    }
+    return res;
+}
