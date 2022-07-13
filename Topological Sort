@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+void topoSort(int node,vector<int> &vis,stack<int> &st,vector<int> adj[]){
+    vis[node]=1;
+    for(auto x:adj[node]){
+        if(!vis[x])
+            topoSort(x,vis,st,adj);
+    }
+    st.push(node);
+}
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+    // Write your code here
+    vector<int> adj[v];
+    for(int i=0;i<e;i++)
+        adj[edges[i][0]].push_back(edges[i][1]);
+    vector<int> vis(v,0),res;
+    stack<int> st;
+    for(int i=0;i<v;i++){
+        if(!vis[i]){
+            topoSort(i,vis,st,adj);
+        }
+    }
+    while(!st.empty()){
+        res.push_back(st.top());
+        st.pop();
+    }
+    return res;
+}
