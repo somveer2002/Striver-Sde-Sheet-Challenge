@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+    int sum=0,rep;
+    for(int i=0;i<n;i++)
+        sum+=arr[i];
+    for(int i=0;i<n;i++){
+        int j;
+        if(arr[i]>n){
+            j=arr[i]-(n+1);
+//             sum+=(arr[i]-n)
+            
+        }
+        else{
+            j=arr[i]-1;
+//             sum+=(arr[i]);
+        }
+        if(arr[j]>n){
+            rep=arr[i]>n?arr[i]-n:arr[i];
+            break;
+        }
+        else{
+            arr[j]=arr[j]+n;
+        }
+    }
+    sum=sum-rep;
+    int tsum=((n*(n+1))/2);
+    int mis=tsum-sum;
+    pair<int,int> res;
+    res.first=mis;
+    res.second=rep;
+    return res;
+    
+	// Write your code here 
+	
+}
