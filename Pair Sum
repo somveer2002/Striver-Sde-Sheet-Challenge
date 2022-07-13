@@ -1,0 +1,49 @@
+#include <bits/stdc++.h> 
+bool mySort(pair<int,int> &,pair<int,int> &);
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   // Write your code here.
+    sort(arr.begin(),arr.end());
+    vector<pair<int,int>> v;
+    int n=arr.size();
+    int left=0,right=n-1;
+    while(left<right){
+        if(arr[left]+arr[right]>s)
+            right--;
+        else if(arr[left]+arr[right]<s)
+            left++;
+        else{
+            v.push_back({arr[left],arr[right]});
+            int u=right-1;
+            while(u>left && arr[u]==arr[right]){
+                v.push_back({arr[left],arr[right]});
+                u--;
+            }
+//             if(u<=left)
+//                 break;
+            int t=left+1;
+            while(t<right && arr[t]==arr[left]){
+                v.push_back({arr[left],arr[right]});
+                t++;
+            }
+//             if(t==right)
+//                 break;
+            left++;
+            right--;
+                
+        }
+    }
+    sort(v.begin(),v.end(),mySort);
+    vector<vector<int>> res;
+    for(auto x:v){
+        vector<int> t;
+        t.push_back(x.first);
+        t.push_back(x.second);
+        res.push_back(t);
+    }
+    return res;
+}
+bool mySort(pair<int,int> &a,pair<int,int> &b){
+    if(a.first==b.first)
+        return b.second<a.second;
+    return a.first<b.first;
+}
