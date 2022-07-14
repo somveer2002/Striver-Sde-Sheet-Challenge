@@ -1,0 +1,13 @@
+#include<bits/stdc++.h>
+int maximumProduct(vector<int> &arr, int n)
+{
+    int prevMax=arr[0],prevMin=arr[0],maxi=arr[0];
+    for(int i=1;i<n;i++){
+        int temp=max(arr[i],max(arr[i]*prevMax,arr[i]*prevMin));
+        prevMin=min(arr[i],min(arr[i]*prevMax,arr[i]*prevMin));
+        prevMax=temp;
+        maxi=max(maxi,prevMax);
+    }
+    return maxi;
+	// Write your code here
+}
