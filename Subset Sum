@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+void getSum(int i,int n,int sum,vector<int> num,vector<int> &res){
+    if(i==n){
+        res.push_back(sum);
+        return;
+    }
+    int curr=num[i];
+    i++;
+    getSum(i,n,sum+curr,num,res);
+    getSum(i,n,sum,num,res);
+}
+vector<int> subsetSum(vector<int> &num)
+{
+    vector<int> res;
+    getSum(0,num.size(),0,num,res);
+    sort(res.begin(),res.end());
+    return res;
+    // Write your code here.
+}
