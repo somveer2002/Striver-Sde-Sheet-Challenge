@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+void getPowSet(int i,vector<int> v,vector<int> &u,vector<vector<int>> &res){
+    if(i==v.size()){
+        res.push_back(u);
+        return;
+    }
+    u.push_back(v[i]);
+    getPowSet(i+1,v,u,res);
+    u.pop_back();
+    getPowSet(i+1,v,u,res);
+}
+vector<vector<int>> pwset(vector<int>v)
+{
+    vector<vector<int>> res;
+    vector<int> u;
+    getPowSet(0,v,u,res);
+    return res;
+    //Write your code here
+}
