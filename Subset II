@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+void getSubset(int i,int n,vector<int> ss, 
+               set<vector<int>> &st,vector<int> &arr){
+    if(i==n){
+        sort(ss.begin(),ss.end());
+        st.insert(ss);
+        return;
+    }
+//     i++;
+    ss.push_back(arr[i]);
+    getSubset(i+1,n,ss,st,arr);
+    ss.pop_back();
+    getSubset(i+1,n,ss,st,arr);
+}
+vector<vector<int>> uniqueSubsets(int n, vector<int> &arr)
+{
+    vector<vector<int>> res;
+    set<vector<int>> st;
+    vector<int> ss;
+    getSubset(0,n,ss,st,arr);
+    for(auto it=st.begin();it!=st.end();it++){
+        res.push_back(*it);
+    }
+//     for(auto x:st){
+//         res.push_back(x);
+//     }
+    return res;
+    
+    // Write your code here.
+}
