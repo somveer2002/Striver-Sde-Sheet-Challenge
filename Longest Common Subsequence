@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+int getLcs(int i1,int i2,string s,string t,vector<vector<int>> &dp){
+    if(i1<0 || i2<0)
+        return 0;
+    if(dp[i1][i2]!=-1)
+        return dp[i1][i2];
+    if(s[i1]==t[i2])
+        return dp[i1][i2]=(1+getLcs(i1-1,i2-1,s,t,dp));
+    else
+        return dp[i1][i2]=(0+max(getLcs(i1-1,i2,s,t,dp),getLcs(i1,i2-1,s,t,dp)));
+}
+int lcs(string s, string t)
+{
+	//Write your code here
+    int n=s.length(),m=t.length();
+    vector<vector<int>> dp(n,vector<int>(m,-1));
+    int res=getLcs(n-1,m-1,s,t,dp);
+    return res;
+}
