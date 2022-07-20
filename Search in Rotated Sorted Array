@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+int binSearch(int low,int high,int key,int *arr){
+    while(low<=high){
+        int mid=(low+high)/2;
+        if(arr[mid]==key)
+            return mid;
+        else if(arr[mid]<key)
+            low=mid+1;
+        else
+            high=mid-1;
+    }
+    return -1;
+}
+int search(int* arr, int n, int key) {
+    // Write your code here.
+    if(arr[0]<arr[n-1])// no curving point
+        return binSearch(0,n-1,key,arr);
+    int pnt;
+    int l=0,h=n-1;
+    while(l<=h){//finding curving point
+        int m=(l+h)/2;
+        if(arr[m]==arr[l]){
+            pnt =m;
+            break;
+        }
+        else if(arr[m]<arr[l]){
+            pnt=m;
+            h=m;
+        }
+        else{
+            pnt =m;
+            l=m;
+        }
+    }
+    if(key>=arr[0] && key<=arr[pnt])
+        return binSearch(0,pnt,key,arr);
+    else
+        return binSearch(pnt+1,n-1,key,arr);
+
+}
