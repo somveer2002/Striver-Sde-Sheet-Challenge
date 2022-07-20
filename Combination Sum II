@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+void getCombination(int i,int n,int t,vector<int> &temp,vector<vector<int>> &res,vector<int> arr){
+   
+    if(i==n){
+        if(t==0){
+            res.push_back(temp);
+            
+        }
+        return ;
+    }
+    
+    temp.push_back(arr[i]);
+    getCombination(i+1,n,t-arr[i],temp,res,arr);
+    temp.pop_back();
+    while((i+1)<arr.size() && arr[i]==arr[i+1])
+        i++;
+    getCombination(i+1,n,t,temp,res,arr);
+}
+vector<vector<int>> combinationSum2(vector<int> &arr, int n, int target)
+{
+	// Write your code here.
+    sort(arr.begin(),arr.end());
+    vector<vector<int>> res;
+    vector<int> temp;
+    getCombination(0,n,target,temp,res,arr);
+    sort(res.begin(),res.end());
+    return res;
+}
+
