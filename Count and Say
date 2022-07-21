@@ -1,0 +1,31 @@
+string getStr(string s){
+    string res="";
+    for(int i=0;i<s.length();i++){
+        pair<char,int> p;
+        p.first=s[i];
+        p.second=1;
+        while((i+1)<s.length() && s[i]==s[i+1]){
+            p.second++;
+            i++;
+        }
+        res+=(to_string(p.second));
+        res+=p.first;
+        
+    }
+//     if(s.length()>1 && s[s.length()-1]!=s[s.length()-2]){
+//         res+="1";
+//         res+=(s[s.length()-1]);
+        
+//     }
+    return res;
+}
+string writeAsYouSpeak(int n) 
+{
+	// Write your code here.
+    string s="1";
+    while(n>1){
+        s=getStr(s);
+        n--;
+    }
+    return s;
+}
