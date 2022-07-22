@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    int left=0,right=0,res=1;
+    unordered_map<char,int> mp;
+    while(right<input.length()){
+        mp[input[right]]++;
+        while(mp[input[right]]>1){
+            mp[input[left]]--;
+            left++;
+        }
+        res=max(res,right-left+1);
+        right++;
+    }
+    return res;
+    //Write your code here
+}
