@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+bool isPal(string s,int st,int end){
+    while(st<=end){
+        if(s[st++]!=s[end--])
+            return false;
+    }
+    return true;
+}
+void getPalPar(int ind,string s,vector<string> &temp,
+              vector<vector<string>> &res){
+    if(ind==s.size()){
+        res.push_back(temp);
+        return;
+    }
+    for(int i=ind;i<s.size();i++){
+        if(isPal(s,ind,i)){
+            temp.push_back(s.substr(ind,i-ind+1));
+            getPalPar(i+1,s,temp,res);
+            temp.pop_back();
+        }
+    }
+}
+vector<vector<string>> partition(string &s) 
+{
+    // Write your code here.
+    vector<vector<string>> res;
+    vector<string> temp;
+    getPalPar(0,s,temp,res);
+    return res;
+}
+
