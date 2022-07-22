@@ -1,0 +1,25 @@
+#include <bits/stdc++.h> 
+bool isPairSum(vector<int> ,int,int,int);
+string fourSum(vector<int> arr, int target, int n) {
+    // Write your code here.
+    sort(arr.begin(),arr.end());
+    for(int i=0;i<n-3;i++){
+        for(int j=i+1;j<n-2;j++){
+            bool flag=isPairSum(arr,j+1,n-1,target-arr[i]-arr[j]);
+            if(flag)
+                return "Yes";
+        }
+    }
+    return "No";
+}
+bool isPairSum(vector<int> a,int left,int right,int tar){
+    while(left<right){
+        if(a[left]+a[right]<tar)
+            left++;
+        else if(a[left]+a[right]>tar)
+            right--;
+        else
+            return true;
+    }
+    return false;
+}
