@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+void dfs(int node,vector<int> &vis,stack<int> &st,vector<int> adj[]){
+    vis[node]=1;
+    for(auto x:adj[node]){
+        if(!vis[x])
+            dfs(x,vis,st,adj);
+    }
+    st.push(node);
+}
+
+void revDFS(int node,vector<int> &vis,vector<int> &t,vector<int> tran[]){
+    vis[node]=1;
+    t.push_back(node);
+    for(auto x:tran[node]){
+        if(!vis[x])
+            revDFS(x,vis,t,tran);
+    }
+}
+
+vector<vector<int>> stronglyConnectedComponents(int n, vector<vector<int>> &edges)
+{
+    vector<int> adj[n];
+    for(int i=0;i<edges.size();i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+    }
+    
+    //topo sort
+    stack<int> st;
+    vector<int> vis(n,0);
+    for(int i=0;i<n;i++){
+        if(!vis[i])
+            dfs(i,vis,st,adj);
+    }
+    
+    //transpose of graph
+    vector<int> transpose[n];
+    for(int i=0;i<n;i++){
+        vis[i]=0;
+        for(auto x:adj[i]){
+            transpose[x].push_back(i);
+        }
+    }
+    
+    vector<vector<int>> res;
+    //dfs of topo sort elements
+    while(!st.empty()){
+        int node=st.top();
+        st.pop();
+        if(!vis[node]){
+            vector<int> temp;
+            revDFS(node,vis,temp,transpose);
+            res.push_back(temp);
+        }
+    }
+    
+    return res;
+    // Write your code here.
+}
