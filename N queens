@@ -1,53 +1,33 @@
-#include<bits/stdc++.h>
-bool isSafe(int row,int col,vector<vector<int>> &t,int n){
-    int i=row,j=col;
-    //top-left
-    while(i>=0 && j>=0){
-        if(t[i][j]==1)
-            return false;
-        i--;
-        j--;
-    }
-    //left
-    i=row;
-    j=0;
-    while(j<=col){
-        if(t[i][j]==1)
-            return false;
-        j++;
-    }
-    //bottom-left
-    i=row;
-    j=col;
-    while(i<n && j>=0){
-        if(t[i][j]==1)
-            return false;
-        i++;
-        j--;
-    }
-    return true;
-}
-void solve(int col,vector<vector<int>> &t,vector<vector<int>> &res,int n){
-    if(n==col){
-        vector<int> temp;
-        for(int i=0;i<n;i++)
-            temp.insert(temp.end(),t[i].begin(),t[i].end());
-        res.push_back(temp);
-        return;
-    }
-    for(int row=0;row<n;row++){
-        if(isSafe(row,col,t,n)){
-            t[row][col]=1;
-            solve(col+1,t,res,n);
-            t[row][col]=0;
+class Solution {
+public:
+    void solve(int col,vector<string> &t,vector<vector<string>> &res,int n,vector<int> &left,vector<int> &topLeft,vector<int> &bottomLeft){
+        if(col==n){
+            res.push_back(t);
+            return;
+        }
+        for(int row=0;row<n;row++){
+            if(left[row]==0 && topLeft[n-1+(col-row)]==0 && bottomLeft[row+col]==0){
+                t[row][col]='Q';
+                left[row]=1;
+                topLeft[n-1+(col-row)]=1;
+                bottomLeft[row+col]=1;
+                solve(col+1,t,res,n,left,topLeft,bottomLeft);
+                t[row][col]='.';
+                left[row]=0;
+                topLeft[n-1+(col-row)]=0;
+                bottomLeft[row+col]=0;
+            }
         }
     }
-        
-}
-vector<vector<int>> solveNQueens(int n) {
-    // Write your code here.
-    vector<vector<int>> res;
-    vector<vector<int>> t(n,vector<int> (n,0));
-    solve(0,t,res,n);
-    return res;
-}
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        vector<string> t(n);
+        string s(n,'.');
+        vector<int> left(n,0),topLeft(2*n-1,0),bottomLeft(2*n-1,0);
+        for(int i=0;i<n;i++){
+            t[i]=s;
+        }
+        solve(0,t,res,n,left,topLeft,bottomLeft);
+        return res;
+    }
+};
