@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+int getHeight(vector<int>&,int,int,unordered_map<int,int>&);
+int heightOfTheTree(vector<int>& inorder, vector<int>& levelOrder, int N){
+	// Write your code here.
+    unordered_map<int,int> mp;
+    for(int i=0;i<N;i++)
+        mp[levelOrder[i]]=i;
+    return (getHeight(inorder,0,N-1,mp)-1);
+}
+int getHeight(vector<int> &inorder,int iStart,int iEnd,unordered_map<int,int> &mp){
+    if(iStart>iEnd)
+        return 0;
+    int rootInd=iStart,j=mp[inorder[iStart]];
+    for(int i=iStart;i<=iEnd;i++){
+        if(mp[inorder[i]]<j){
+            rootInd=i;
+            j=mp[inorder[i]];
+        }
+        
+    }
+//     Node* root= new Node(inorder[rootInd]);
+    
+    
+    int lh=getHeight(inorder,iStart,rootInd-1,mp);
+    int rh=getHeight(inorder,rootInd+1,iEnd,mp);
+    return (1+max(lh,rh));
+}
