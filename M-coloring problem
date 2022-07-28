@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+bool isPoss(int node,int c,vector<int> &col,vector<int> adj[]){
+    for(auto x:adj[node]){
+        if(col[x]==c)
+            return false;
+    }
+    return true;
+}
+bool checkPoss(int node,vector<int> &col,vector<int> adj[],int m,int n){
+    if(node==n)
+        return true;
+    for(int i=1;i<=m;i++){
+        if(isPoss(node,i,col,adj)){
+            col[node]=i;
+            if(checkPoss(node+1,col,adj,m,n))
+                return true;
+            col[node]=0;
+        }
+    }
+    return false;
+}
+string graphColoring(vector<vector<int>> &mat, int m) {
+    // Write your code here
+    int n=mat.size();
+    vector<int> adj[n];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(mat[i][j]){
+                adj[i].push_back(j);
+                adj[j].push_back(i);
+            }
+        }
+    }
+    vector<int> col(n,0);
+    if(checkPoss(0,col,adj,m,n))
+        return "YES";
+    return "NO";
+}
