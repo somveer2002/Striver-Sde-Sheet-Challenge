@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+bool canPlace(int dist,int c,vector<int> pos,int n){
+    int placed=1,recentPlaced=0;
+    for(int i=1;i<n;i++){
+        if(pos[i]-pos[recentPlaced]>=dist){
+            placed++;
+            recentPlaced=i;
+        }
+    }
+    if(placed>=c)
+        return true;
+    else
+        return false;
+}
+
+int chessTournament(vector<int> pos , int n ,  int c){
+	// Write your code here
+    sort(pos.begin(),pos.end());
+    int l=0,h=pos[n-1]-pos[0],ans=0;
+    while(l<=h){
+        int mid=(l+h)/2;
+        if(canPlace(mid,c,pos,n)){
+            ans=mid;
+            l=mid+1;
+        }
+        else
+            h=mid-1;
+    }
+    return ans;
+}
