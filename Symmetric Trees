@@ -1,0 +1,16 @@
+bool areSame(BinaryTreeNode<int>*,BinaryTreeNode<int>*);
+bool isSymmetric(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+        return true;
+    return areSame(root->left,root->right);
+    // Write your code here.    
+}
+bool areSame(BinaryTreeNode<int>* left,BinaryTreeNode<int>* right){
+    if(left==NULL|| right==NULL)
+        return (left==right);
+    return (left->data==right->data && areSame(left->left,right->right) && areSame(left->right,right->left));
+    
+    
+    
+}
