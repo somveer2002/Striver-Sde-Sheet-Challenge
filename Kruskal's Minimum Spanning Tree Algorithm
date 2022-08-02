@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+
+class Comp {
+public:
+    bool operator()(const vector<int> &a, const vector<int> &b){
+        if(a[2]>b[2]) return true;
+    }
+};
+
+int getParent(int x, vector<int> & parent){
+    if(parent[x]!=x){
+        return parent[x] = getParent(parent[x], parent);
+    }
+    return x;
+}
+
+int kruskalMST(int n, int m, vector<vector<int>> &graph) {
+	priority_queue<vector<int>, vector<vector<int>>, Comp> q;
+    vector<int> parent(n+1);
+    for(int i=0; i<graph.size(); i++){
+        q.push(graph[i]);
+    }
+    for(int i=0; i<=n; i++) {
+        parent[i]=i;
+    }
+    int t=0, ans=0;
+    while(!q.empty() && t<n-1){
+        auto m = q.top();
+        q.pop();
+        int u = m[0], v = m[1], w = m[2];
+        int x = getParent(u, parent), y = getParent(v, parent);
+        if(x!=y){
+            parent[x]=y;
+            ans+=w;
+            t++;
+        }
+    }
+    return ans;
+}
